@@ -188,7 +188,7 @@ if __name__ == "__main__":
                          format_list(osrs_actions, search_method) + format_list(count_words, search_method) + format_list(misc_words, search_method)
 
     # FIND MATCHES OF ITEMS AND LOCATIONS
-    for x in range(0, 9):
+    for x in range(0, 10):
         print(word_sets[x])
         freq1 = collections.Counter(word_sets[x][0])
         freq2 = collections.Counter(word_sets[x][1])
