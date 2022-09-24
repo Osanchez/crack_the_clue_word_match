@@ -1,3 +1,5 @@
+# Collective Information can be found here
+https://docs.google.com/spreadsheets/d/1FOwpkSyU1ybdkI6MhRcvF0iLaJQmp5PnyGmOMOsxgRQ/edit#gid=274506738
 #Latest Run Results
 ## Original Search Method (Combine all letters of search words into single string)
 ```
