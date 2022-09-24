@@ -1,6 +1,6 @@
 import collections
 
-from Constants import osrs_items, osrs_locations, osrs_actions, alphabet, alphabet_letters
+from Constants import osrs_items, osrs_locations, osrs_actions, count_words, misc_words, alphabet, alphabet_letters
 
 import requests
 from bs4 import BeautifulSoup
@@ -117,7 +117,7 @@ if __name__ == "__main__":
         ("HRFRONLRATTATTIQAT", "ANEUOASGNHSFALEHND"),
     ]
 
-    # format item and location list
+    # format and combine word lists, this could use some refactor tbh
     formatted_item_list = []
     for item in osrs_items:
         if item not in formatted_item_list:
@@ -136,8 +136,20 @@ if __name__ == "__main__":
             formatted_str = action.replace(" ", "")
             formatted_location_list.append(formatted_str)
 
+    formatted_misc_words_list = []
+    for misc_word in misc_words:
+        if misc_word not in formatted_misc_words_list:
+            formatted_str = misc_word.replace(" ", "")
+            formatted_misc_words_list.append(formatted_str)
+
+    formatted_count_words_list = []
+    for count_word in count_words:
+        if count_word not in formatted_count_words_list:
+            formatted_str = count_word.replace(" ", "")
+            formatted_count_words_list.append(formatted_str)
+
     # combined items and location lists
-    item_location_list = formatted_item_list + formatted_location_list + formatted_actions_list
+    item_location_list = formatted_item_list + formatted_location_list + formatted_actions_list + formatted_misc_words_list + formatted_count_words_list
 
     # FIND MATCHES OF ITEMS AND LOCATIONS
     for x in range(0, 9):
