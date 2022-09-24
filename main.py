@@ -1,5 +1,4 @@
 import collections
-import sys
 
 from Constants import osrs_items, osrs_locations, osrs_npcs, osrs_actions, count_words, misc_words, alphabet, alphabet_letters
 
@@ -131,11 +130,53 @@ def format_list(string_list, method=None):
         return formatted_list
 
 
-if __name__ == "__main__":
-    # scrape_items_osrs()
-    # get_osrs_locations()
-    # scrape_npcs_osrs()
+def run_search(cipher_list, search_list):
+    # FIND MATCHES OF ITEMS AND LOCATIONS
+    for x in range(0, len(word_sets)):
+        print(word_sets[x])
+        freq1 = collections.Counter(cipher_list[x][0])
+        freq2 = collections.Counter(cipher_list[x][1])
 
+        left_matches = []
+        right_matches = []
+        left_right_matches = []
+
+        # check if item is in each side
+        for search_word in search_list:
+            does_both_match = True
+            does_left_match = True
+            does_right_match = True
+            item_location_letter_freq = collections.Counter(search_word)
+            for letter in item_location_letter_freq.keys():
+                if freq1[letter] >= item_location_letter_freq[letter] and freq2[letter] >= item_location_letter_freq[letter]:
+                    continue
+                elif freq1[letter] >= item_location_letter_freq[letter] and not freq2[letter] >= item_location_letter_freq[letter]:
+                    does_right_match = False
+                    does_both_match = False
+                    continue
+                elif not freq1[letter] >= item_location_letter_freq[letter] and freq2[letter] >= item_location_letter_freq[letter]:
+                    does_left_match = False
+                    does_both_match = False
+                    continue
+                else:
+                    does_both_match = False
+                    does_left_match = False
+                    does_right_match = False
+
+            if does_both_match:
+                left_right_matches.append(search_word)
+            if does_left_match:
+                left_matches.append(search_word)
+            if does_right_match:
+                right_matches.append(search_word)
+
+        print("left matches:", set(left_matches))
+        print("right matches:", set(right_matches))
+        print("left/right matches:", set(left_right_matches))
+        print()
+
+
+if __name__ == "__main__":
     """
         "Between the two, you'll find a match.
         Easy you think, but there's a catch."
@@ -179,54 +220,14 @@ if __name__ == "__main__":
         ("TASEWNHEVGRANOKNOT", "SHTOELHTICUTMLHOIO"),
         ("HRFRONLRATTATTIQAT", "ANEUOASGNHSFALEHND"),
     ]
-    # methods
+
+    # format methods
     # 0 - original, remove space
     # 1 - split on space
-    search_method = 0
-    # format and combine word lists, this could use some refactor tbh
-    item_location_list = format_list(osrs_items, search_method) + format_list(osrs_npcs, search_method) + format_list(osrs_locations, search_method) + \
-                         format_list(osrs_actions, search_method) + format_list(count_words, search_method) + format_list(misc_words, search_method)
+    format_method = 0
+    # format word list used for searching
+    global_search_word_list = format_list(osrs_items, format_method) + format_list(osrs_npcs, format_method) + format_list(osrs_locations, format_method) + \
+                         format_list(osrs_actions, format_method) + format_list(count_words, format_method) + format_list(misc_words, format_method)
 
-    # FIND MATCHES OF ITEMS AND LOCATIONS
-    for x in range(0, 10):
-        print(word_sets[x])
-        freq1 = collections.Counter(word_sets[x][0])
-        freq2 = collections.Counter(word_sets[x][1])
-
-        left_matches = []
-        right_matches = []
-        left_right_matches = []
-
-        # check if item is in each side
-        for item_location in item_location_list:
-            does_both_match = True
-            does_left_match = True
-            does_right_match = True
-            item_location_letter_freq = collections.Counter(item_location)
-            for letter in item_location_letter_freq.keys():
-                if freq1[letter] >= item_location_letter_freq[letter] and freq2[letter] >= item_location_letter_freq[letter]:
-                    continue
-                elif freq1[letter] >= item_location_letter_freq[letter] and not freq2[letter] >= item_location_letter_freq[letter]:
-                    does_right_match = False
-                    does_both_match = False
-                    continue
-                elif not freq1[letter] >= item_location_letter_freq[letter] and freq2[letter] >= item_location_letter_freq[letter]:
-                    does_left_match = False
-                    does_both_match = False
-                    continue
-                else:
-                    does_both_match = False
-                    does_left_match = False
-                    does_right_match = False
-
-            if does_both_match:
-                left_right_matches.append(item_location)
-            if does_left_match:
-                left_matches.append(item_location)
-            if does_right_match:
-                right_matches.append(item_location)
-
-        print("left matches:", set(left_matches))
-        print("right matches:", set(right_matches))
-        print("left/right matches:", set(left_right_matches))
-        print()
+    # run the search
+    run_search(word_sets, global_search_word_list)
