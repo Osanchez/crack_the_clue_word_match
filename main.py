@@ -107,6 +107,16 @@ def remove_letter_from_str(letter, str):
     return str.replace(letter, '', 1)
 
 
+def format_list(string_list):
+    formatted_list = []
+    for str_obj in string_list:
+        if str_obj not in formatted_list:
+            format_str = str_obj.replace(" ", "")
+            formatted_list.append(format_str)
+
+    return formatted_list
+
+
 if __name__ == "__main__":
     # scrape_items_osrs()
     # get_osrs_locations()
@@ -157,45 +167,8 @@ if __name__ == "__main__":
     ]
 
     # format and combine word lists, this could use some refactor tbh
-    formatted_item_list = []
-    for item in osrs_items:
-        if item not in formatted_item_list:
-            formatted_str = item.replace(" ", "")
-            formatted_item_list.append(formatted_str)
-
-    formatted_npcs_list = []
-    for npc in osrs_npcs:
-        if npc not in formatted_item_list:
-            formatted_str = npc.replace(" ", "")
-            formatted_npcs_list.append(formatted_str)
-
-    formatted_location_list = []
-    for location in osrs_locations:
-        if location not in formatted_item_list:
-            formatted_str = location.replace(" ", "")
-            formatted_location_list.append(formatted_str)
-
-    formatted_actions_list = []
-    for action in osrs_actions:
-        if action not in formatted_actions_list:
-            formatted_str = action.replace(" ", "")
-            formatted_location_list.append(formatted_str)
-
-    formatted_misc_words_list = []
-    for misc_word in misc_words:
-        if misc_word not in formatted_misc_words_list:
-            formatted_str = misc_word.replace(" ", "")
-            formatted_misc_words_list.append(formatted_str)
-
-    formatted_count_words_list = []
-    for count_word in count_words:
-        if count_word not in formatted_count_words_list:
-            formatted_str = count_word.replace(" ", "")
-            formatted_count_words_list.append(formatted_str)
-
-    # combined items and location lists
-    item_location_list = formatted_item_list + formatted_location_list + formatted_actions_list +\
-                         formatted_misc_words_list + formatted_count_words_list + formatted_npcs_list
+    item_location_list = format_list(osrs_items) + format_list(osrs_npcs) + format_list(osrs_locations) + \
+                         format_list(osrs_actions) + format_list(count_words) + format_list(misc_words)
 
     # FIND MATCHES OF ITEMS AND LOCATIONS
     for x in range(0, 9):
