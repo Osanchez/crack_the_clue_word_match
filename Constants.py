@@ -1528,5 +1528,14 @@ osrs_locations = [
     "PUROPURO"
 ]
 
+osrs_actions = [
+    "EXAMINE",
+    "LURE",
+    "SMALL NET",
+    "BAIT",
+    "CAGE",
+    "HARPOON"
+]
+
 alphabet = "abcdefghijklmnopqrstuvwxyz"
 alphabet_letters = [x for x in alphabet]

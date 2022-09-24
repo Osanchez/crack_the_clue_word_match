@@ -2,7 +2,7 @@
 ```
 ('YPWAIETOAENRMHMGEN', 'MIVWDMKDTCBANGBFKW')
 left matches: ['GRAIN', 'HAMMER', 'HONEY', 'MEATPIE', 'MIMETOP', 'MOP', 'POT', 'ROPE', 'THINGY', 'TIARA', 'TINORE', 'WHITEAPRON', 'WIG', 'MORYTANIA', 'ENTRANA', 'MARIM']
-right matches: ['WIG']
+right matches: ['WIG', 'BAIT']
 left/right matches: ['WIG']
 
 ('NQLLWQMIRLVFSDROTN', 'VKIIAAKIRLHADHESVG')
@@ -11,9 +11,9 @@ right matches: ['SHARK', 'SILK', 'VIAL', 'ALKHARID', 'SILVAREA']
 left/right matches: []
 
 ('LINVADMCURYBOFEUAI', 'DRULRHTDEESEBREPYE')
-left matches: ['BODYRUNE', 'BREAD', 'CLAY', 'COAL', 'COIF', 'FLOUR', 'FLYER', 'FUR', 'IODINE', 'IRONMACE', 'MINDCORE', 'OILCAN', 'RUBY', 'RUN', 'VIAL', 'FALADOR', 'BONEYARD']
-right matches: ['BEER', 'BLUEDYE', 'REDDYE', 'RUBY']
-left/right matches: ['RUBY']
+left matches: ['BODYRUNE', 'BREAD', 'CLAY', 'COAL', 'COIF', 'FLOUR', 'FLYER', 'FUR', 'IODINE', 'IRONMACE', 'MINDCORE', 'OILCAN', 'RUBY', 'RUN', 'VIAL', 'FALADOR', 'BONEYARD', 'LURE']
+right matches: ['BEER', 'BLUEDYE', 'REDDYE', 'RUBY', 'LURE']
+left/right matches: ['RUBY', 'LURE']
 
 ('VRBOOHHSDEWEAANANN', 'EERATOLITEJEPEPZFN')
 left matches: ['BANANA', 'BEER', 'BONES', 'BREAD', 'SHADEROBE', 'NARDAH']
@@ -21,7 +21,7 @@ right matches: ['POLE', 'POT', 'ROPE', 'TETRA', 'TILE', 'TINORE', 'TREETOP']
 left/right matches: []
 
 ('ANHIITBICPATELTTMH', 'FEKETCHPMSNAFEWNQM')
-left matches: ['LAMP', 'TILE']
+left matches: ['LAMP', 'TILE', 'BAIT']
 right matches: ['CAKE', 'CHEESE', 'EEK', 'PASTE', 'STAFF', 'STAKE']
 left/right matches: []
 
@@ -32,7 +32,7 @@ left/right matches: []
 
 ('OENIRSRONOFKGVEKAR', 'TLBGONGUWHILPAFNAS')
 left matches: ['EEK', 'GRAIN', 'IRONORE', 'KNIFE', 'ONION']
-right matches: ['BOWL', 'LOGS', 'POT', 'SITUP', 'SNOWBALL', 'TUNA', 'WIG']
+right matches: ['BOWL', 'LOGS', 'POT', 'SITUP', 'SNOWBALL', 'TUNA', 'WIG', 'BAIT']
 left/right matches: []
 
 ('EHERESSOVEMDGJTCWS', 'RDMCORRODAPJNLSAWY')

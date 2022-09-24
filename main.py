@@ -1,6 +1,6 @@
 import collections
 
-from Constants import osrs_items, osrs_locations, alphabet, alphabet_letters
+from Constants import osrs_items, osrs_locations, osrs_actions, alphabet, alphabet_letters
 
 import requests
 from bs4 import BeautifulSoup
@@ -130,8 +130,14 @@ if __name__ == "__main__":
             formatted_str = location.replace(" ", "")
             formatted_location_list.append(formatted_str)
 
+    formatted_actions_list = []
+    for action in osrs_actions:
+        if action not in formatted_actions_list:
+            formatted_str = action.replace(" ", "")
+            formatted_location_list.append(formatted_str)
+
     # combined items and location lists
-    item_location_list = formatted_item_list + formatted_location_list
+    item_location_list = formatted_item_list + formatted_location_list + formatted_actions_list
 
     # FIND MATCHES OF ITEMS AND LOCATIONS
     for x in range(0, 9):
