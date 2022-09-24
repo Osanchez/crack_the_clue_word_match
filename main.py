@@ -1,6 +1,7 @@
 import collections
+import sys
 
-from Constants import osrs_items, osrs_locations, osrs_actions, count_words, misc_words, alphabet, alphabet_letters
+from Constants import osrs_items, osrs_locations, osrs_npcs, osrs_actions, count_words, misc_words, alphabet, alphabet_letters
 
 import requests
 from bs4 import BeautifulSoup
@@ -17,6 +18,41 @@ def scrape_items_osrs():
             for item in items:
                 print('"' + item.text + '",')
 
+
+def scrape_npcs_osrs():
+    npcs_list = []
+    urls = [
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pageuntil=Awusah+the+Mayor#mw-pages",
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Awusah+the+Mayor#mw-pages",
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Brother+Omad#mw-pages",
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Commander+Veldaban#mw-pages",
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Duel+Guide#mw-pages",
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Feanor#mw-pages",
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Ghost+%28The+General%27s+Shadow%29#mw-pages",
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Hari#mw-pages",
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Jonas#mw-pages",
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Lizard+man+%282014+April+Fools%29#mw-pages",
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Miner+%28Jatizso%29#mw-pages",
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Oobapohk#mw-pages",
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=R0ck+5masher#mw-pages",
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Saro#mw-pages",
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Snowman#mw-pages",
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Tolna#mw-pages",
+        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Wemund#mw-pages"
+    ]
+
+    for npc_wiki_url in urls:
+        page = requests.get(npc_wiki_url)
+        soup = BeautifulSoup(page.content, "html.parser")
+        all_sections = soup.find_all('div', {"class": "mw-category mw-category-columns"})
+        for section in all_sections:
+            npcs = section.find_all('li')
+            for npc in npcs:
+                if npc not in npcs_list:
+                    print('"' + npc.text + '",')
+                    npcs_list.append(npc.text)
+
+    print(npcs_list)
 
 def search_word_list_line_matches(word_sets):
     common_letter_list = []
@@ -72,7 +108,10 @@ def remove_letter_from_str(letter, str):
 
 
 if __name__ == "__main__":
+    # scrape_items_osrs()
     # get_osrs_locations()
+    # scrape_npcs_osrs()
+
     """
         "Between the two, you'll find a match.
         Easy you think, but there's a catch."
@@ -124,6 +163,12 @@ if __name__ == "__main__":
             formatted_str = item.replace(" ", "")
             formatted_item_list.append(formatted_str)
 
+    formatted_npcs_list = []
+    for npc in osrs_npcs:
+        if npc not in formatted_item_list:
+            formatted_str = npc.replace(" ", "")
+            formatted_npcs_list.append(formatted_str)
+
     formatted_location_list = []
     for location in osrs_locations:
         if location not in formatted_item_list:
@@ -149,7 +194,8 @@ if __name__ == "__main__":
             formatted_count_words_list.append(formatted_str)
 
     # combined items and location lists
-    item_location_list = formatted_item_list + formatted_location_list + formatted_actions_list + formatted_misc_words_list + formatted_count_words_list
+    item_location_list = formatted_item_list + formatted_location_list + formatted_actions_list +\
+                         formatted_misc_words_list + formatted_count_words_list + formatted_npcs_list
 
     # FIND MATCHES OF ITEMS AND LOCATIONS
     for x in range(0, 9):
