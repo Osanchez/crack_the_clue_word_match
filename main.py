@@ -107,14 +107,28 @@ def remove_letter_from_str(letter, str):
     return str.replace(letter, '', 1)
 
 
-def format_list(string_list):
+def format_list(string_list, method=None):
     formatted_list = []
-    for str_obj in string_list:
-        if str_obj not in formatted_list:
-            format_str = str_obj.replace(" ", "")
-            formatted_list.append(format_str)
+    if method == 1:
+        for str_obj in string_list:
+            if str_obj not in formatted_list:
+                format_str = str_obj.split(" ")
+                if len(format_str) > 1:
+                    for item in format_str:
+                        if item and item not in formatted_list:
+                            formatted_list.append(item)
+                else:
+                    if format_str and format_str not in formatted_list:
+                        formatted_list.append(format_str[0])
 
-    return formatted_list
+        return formatted_list
+    else:
+        for str_obj in string_list:
+            if str_obj not in formatted_list:
+                format_str = str_obj.replace(" ", "")
+                formatted_list.append(format_str)
+
+        return formatted_list
 
 
 if __name__ == "__main__":
@@ -165,10 +179,13 @@ if __name__ == "__main__":
         ("TASEWNHEVGRANOKNOT", "SHTOELHTICUTMLHOIO"),
         ("HRFRONLRATTATTIQAT", "ANEUOASGNHSFALEHND"),
     ]
-
+    # methods
+    # 0 - original, remove space
+    # 1 - split on space
+    search_method = 0
     # format and combine word lists, this could use some refactor tbh
-    item_location_list = format_list(osrs_items) + format_list(osrs_npcs) + format_list(osrs_locations) + \
-                         format_list(osrs_actions) + format_list(count_words) + format_list(misc_words)
+    item_location_list = format_list(osrs_items, search_method) + format_list(osrs_npcs, search_method) + format_list(osrs_locations, search_method) + \
+                         format_list(osrs_actions, search_method) + format_list(count_words, search_method) + format_list(misc_words, search_method)
 
     # FIND MATCHES OF ITEMS AND LOCATIONS
     for x in range(0, 9):
@@ -209,7 +226,7 @@ if __name__ == "__main__":
             if does_right_match:
                 right_matches.append(item_location)
 
-        print("left matches:", left_matches)
-        print("right matches:", right_matches)
-        print("left/right matches:", left_right_matches)
+        print("left matches:", set(left_matches))
+        print("right matches:", set(right_matches))
+        print("left/right matches:", set(left_right_matches))
         print()
