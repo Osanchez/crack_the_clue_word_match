@@ -1,4 +1,5 @@
 import collections
+import sys
 
 from Constants import osrs_items, osrs_locations, osrs_npcs, osrs_actions, count_words, misc_words, alphabet, alphabet_letters
 
@@ -7,45 +8,41 @@ from bs4 import BeautifulSoup
 
 
 def scrape_items_osrs():
-    for filter_letter in alphabet_letters:
-        url = f"https://oldschool.runescape.wiki/w/Category:Free-to-play_items?from={filter_letter.upper()}"
-        page = requests.get(url)
+    items_list = []
+    urls = [
+        "https://oldschool.runescape.wiki/w/Special:Ask?eq=no&limit=500&offset=0&order=asc&p=format%3Dbroadtable/link%3Dall/headers%3Dshow/searchlabel%3D...-20further-20results/class%3Dsortable-20wikitable-20smwtable&q=[[Category:Free-to-play_items]]%0A[[All+Is+members+only::false]]&sort=#search",
+        "https://oldschool.runescape.wiki/w/Special:Ask?eq=no&limit=500&offset=500&order=asc&p=format%3Dbroadtable%2Flink%3Dall%2Fheaders%3Dshow%2Fsearchlabel%3D...-20further-20results%2Fclass%3Dsortable-20wikitable-20smwtable&q=%5B%5BCategory%3AFree-to-play_items%5D%5D%0A%5B%5BAll+Is+members+only%3A%3Afalse%5D%5D&sort=#search",
+        "https://oldschool.runescape.wiki/w/Special:Ask?eq=no&limit=500&offset=1000&order=asc&p=format%3Dbroadtable%2Flink%3Dall%2Fheaders%3Dshow%2Fsearchlabel%3D...-20further-20results%2Fclass%3Dsortable-20wikitable-20smwtable&q=%5B%5BCategory%3AFree-to-play_items%5D%5D%0A%5B%5BAll+Is+members+only%3A%3Afalse%5D%5D&sort=#search",
+        "https://oldschool.runescape.wiki/w/Special:Ask?eq=no&limit=500&offset=1500&order=asc&p=format%3Dbroadtable%2Flink%3Dall%2Fheaders%3Dshow%2Fsearchlabel%3D...-20further-20results%2Fclass%3Dsortable-20wikitable-20smwtable&q=%5B%5BCategory%3AFree-to-play_items%5D%5D%0A%5B%5BAll+Is+members+only%3A%3Afalse%5D%5D&sort=#search"
+    ]
+
+    for item_wiki_url in urls:
+        page = requests.get(item_wiki_url)
         soup = BeautifulSoup(page.content, "html.parser")
-        all_sections = soup.find_all('div', {"class": "mw-category"})
+        all_sections = soup.find_all('table', {"class": "sortable"})
         for section in all_sections:
-            items = section.find_all('li')
+            items = section.find_all('a')
             for item in items:
-                print('"' + item.text + '",')
+                if item not in items_list:
+                    print('"' + item.text + '",')
+                    items_list.append(item.text)
+
+    print(items_list)
 
 
 def scrape_npcs_osrs():
     npcs_list = []
     urls = [
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pageuntil=Awusah+the+Mayor#mw-pages",
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Awusah+the+Mayor#mw-pages",
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Brother+Omad#mw-pages",
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Commander+Veldaban#mw-pages",
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Duel+Guide#mw-pages",
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Feanor#mw-pages",
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Ghost+%28The+General%27s+Shadow%29#mw-pages",
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Hari#mw-pages",
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Jonas#mw-pages",
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Lizard+man+%282014+April+Fools%29#mw-pages",
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Miner+%28Jatizso%29#mw-pages",
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Oobapohk#mw-pages",
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=R0ck+5masher#mw-pages",
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Saro#mw-pages",
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Snowman#mw-pages",
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Tolna#mw-pages",
-        "https://oldschool.runescape.wiki/w/Category:Non-player_characters?pagefrom=Wemund#mw-pages"
+        "https://oldschool.runescape.wiki/w/Special:Ask?eq=no&limit=500&offset=0&order=asc&p=format%3Dbroadtable%2Flink%3Dall%2Fheaders%3Dshow%2Fsearchlabel%3D...-20further-20results%2Fclass%3Dsortable-20wikitable-20smwtable&q=%5B%5BCategory%3ANon-player+characters%5D%5D%0A%5B%5BAll+Is+members+only%3A%3Afalse%5D%5D&sort=#search",
+        "https://oldschool.runescape.wiki/w/Special:Ask?eq=no&limit=500&offset=500&order=asc&p=format%3Dbroadtable%2Flink%3Dall%2Fheaders%3Dshow%2Fsearchlabel%3D...-20further-20results%2Fclass%3Dsortable-20wikitable-20smwtable&q=%5B%5BCategory%3ANon-player+characters%5D%5D%0A%5B%5BAll+Is+members+only%3A%3Afalse%5D%5D&sort=#search",
     ]
 
     for npc_wiki_url in urls:
         page = requests.get(npc_wiki_url)
         soup = BeautifulSoup(page.content, "html.parser")
-        all_sections = soup.find_all('div', {"class": "mw-category mw-category-columns"})
+        all_sections = soup.find_all('table', {"class": "sortable"})
         for section in all_sections:
-            npcs = section.find_all('li')
+            npcs = section.find_all('a')
             for npc in npcs:
                 if npc not in npcs_list:
                     print('"' + npc.text + '",')
@@ -115,7 +112,7 @@ def format_list(string_list, method=None):
                 if len(format_str) > 1:
                     for item in format_str:
                         if item and item not in formatted_list:
-                            formatted_list.append(item)
+                            formatted_list.append(item.upper())
                 else:
                     if format_str and format_str not in formatted_list:
                         formatted_list.append(format_str[0])
@@ -124,7 +121,7 @@ def format_list(string_list, method=None):
     else:
         for str_obj in string_list:
             if str_obj not in formatted_list:
-                format_str = str_obj.replace(" ", "")
+                format_str = str_obj.replace(" ", "").upper()
                 formatted_list.append(format_str)
 
         return formatted_list
@@ -177,6 +174,8 @@ def run_search(cipher_list, search_list):
 
 
 if __name__ == "__main__":
+    # scrape_npcs_osrs()
+    # scrape_items_osrs()
     """
         "Between the two, you'll find a match.
         Easy you think, but there's a catch."
