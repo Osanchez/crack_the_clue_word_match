@@ -2896,6 +2896,7 @@ osrs_actions = [
 ]
 
 misc_words = [
+    "CATCH",
     "THE",
     "AND",
     "BY",
